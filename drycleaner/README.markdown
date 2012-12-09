@@ -1,4 +1,4 @@
-STRAWBERRIES DRYCLEANER PICK-UP TIME CALCULATOR
+# STRAWBERRIES DRYCLEANER PICK-UP TIME CALCULATOR
 
 1 - Does not verify consistency between opening and closing time, f.i. closing time being set earlier than opening time.
 

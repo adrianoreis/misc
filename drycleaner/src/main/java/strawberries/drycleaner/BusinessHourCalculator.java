@@ -151,19 +151,19 @@ public class BusinessHourCalculator {
 		String formattedDate = sdf.format(aDate);
 		Calendar aDateCalendar = Calendar.getInstance();
 		aDateCalendar.setTime(aDate);
+		Date closingTime;
 		Calendar closingTimeCalendar = Calendar.getInstance();
 		if (additionalOpeningTimes.containsKey(formattedDate)){		
-			Date closingTime = additionalOpeningTimes.get(formattedDate).getEnd();
-			closingTimeCalendar.setTime(closingTime);
-			aDateCalendar.set(Calendar.HOUR_OF_DAY,	closingTimeCalendar.get(Calendar.HOUR_OF_DAY));
-			aDateCalendar.set(Calendar.MINUTE, closingTimeCalendar.get(Calendar.MINUTE));		
+			closingTime = additionalOpeningTimes.get(formattedDate).getEnd();
+			
 		} else {
 			DayOfWeek dayOfWeek = DayOfWeek.values()[aDateCalendar.get(Calendar.DAY_OF_WEEK) - 1];
-			Date closingTime = openingTimes.get(dayOfWeek).getEnd();
-			closingTimeCalendar.setTime(closingTime);
-			aDateCalendar.set(Calendar.HOUR_OF_DAY,	closingTimeCalendar.get(Calendar.HOUR_OF_DAY));
-			aDateCalendar.set(Calendar.MINUTE, closingTimeCalendar.get(Calendar.MINUTE));
+			closingTime = openingTimes.get(dayOfWeek).getEnd();			
 		}
+		
+		closingTimeCalendar.setTime(closingTime);
+		aDateCalendar.set(Calendar.HOUR_OF_DAY,	closingTimeCalendar.get(Calendar.HOUR_OF_DAY));
+		aDateCalendar.set(Calendar.MINUTE, closingTimeCalendar.get(Calendar.MINUTE));
 		// the closing time for the requested date
 		return aDateCalendar.getTime();
 	}

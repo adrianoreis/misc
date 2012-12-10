@@ -31,6 +31,13 @@ public class BusinessHourCalculatorTest {
 	}
 	
 	@Test
+	public void testDeliverySameDayDropOffAfterClosing() throws ParseException {		
+		Date expectedVal = sdf.parse("08/06/2010 11:00");
+		Date retVal = businessHourCalculator.calculateDeadline(2*60*60, "2010-06-07 18:10");
+		assertEquals(expectedVal, retVal);
+	}
+	
+	@Test
 	public void testDeliverySameDayDropOffBeforeOpening() throws ParseException {		
 		Date expectedVal = sdf.parse("07/06/2010 11:00");
 		Date retVal = businessHourCalculator.calculateDeadline(2*60*60, "2010-06-07 08:40");
@@ -41,7 +48,7 @@ public class BusinessHourCalculatorTest {
 	public void testDeliveryNextDay() throws ParseException {
 		businessHourCalculator.setClosed(DayOfWeek.SUNDAY, DayOfWeek.WEDNESDAY);	
 		Date expectedVal = sdf.parse("10/06/2010 09:03");
-		Date retVal = businessHourCalculator.calculateDeadline(15*60, "2010-06-08 14:48");;
+		Date retVal = businessHourCalculator.calculateDeadline(15*60, "2010-06-08 14:48");
 		assertEquals(expectedVal, retVal);
 	}
 

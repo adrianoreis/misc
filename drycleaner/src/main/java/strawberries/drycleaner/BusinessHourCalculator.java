@@ -37,8 +37,19 @@ public class BusinessHourCalculator {
 		if(desiredDropOffDateTime.before(openingHourForDesiredDropOffDay)){
 			desiredDropOffDateTime = openingHourForDesiredDropOffDay;
 		}
+				
+		if(desiredDropOffDateTime.after(closingHourForDesiredDropOffDay)){
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(desiredDropOffDateTime);
+			calendar.add(Calendar.DAY_OF_MONTH, 1);
+			Date closestValidBusinessDay = getClosestValidBusinessDay(calendar.getTime());
+			desiredDropOffDateTime = getOpeningHourForDate(closestValidBusinessDay);
+			
+		}
+
 		long diffInMiliseconds = closingHourForDesiredDropOffDay.getTime()	- desiredDropOffDateTime.getTime();
 		long diffInSeconds = TimeUnit.MILLISECONDS.toSeconds(diffInMiliseconds);		
+		diffInSeconds = diffInSeconds < 0? -diffInSeconds: diffInSeconds;
 		
 		if (diffInSeconds < timeInterval) {	
 			long carryOver = diffInSeconds - timeInterval;
